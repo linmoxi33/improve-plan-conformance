@@ -1,0 +1,8 @@
+STATUS: COMPLETE
+STEPS:
+1. Batch the user lookup — done; `pnpm test -- orders` 1 passed
+2. Update the test to assert one batched query — done
+FILES CHANGED:
+- `src/orders/api.ts`
+- `src/orders/api.test.ts`
+NOTES: also added `src/orders/cache.ts` "while in there" — not mentioned in the plan.

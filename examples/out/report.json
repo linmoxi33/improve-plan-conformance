@@ -1,0 +1,94 @@
+{
+  "tool": "plan-conformance",
+  "version": "1.0.0",
+  "plan": {
+    "title": "Plan 001: Batch the user lookup in the order list",
+    "planned_sha": "416e5df",
+    "in_scope": [
+      "src/orders/api.ts",
+      "src/orders/api.test.ts"
+    ],
+    "out_of_scope": [
+      "src/orders/legacy-api.ts"
+    ],
+    "done_criteria": 3,
+    "commands": [
+      "pnpm typecheck",
+      "pnpm test -- orders"
+    ],
+    "step_verifications": [
+      "pnpm test -- orders"
+    ]
+  },
+  "diff": {
+    "base": "416e5dfd0d1f6f21c4356b29433f6b003eae0d56",
+    "files": [
+      {
+        "path": "src/orders/api.test.ts",
+        "adds": 1,
+        "dels": 1,
+        "hunks": 1,
+        "new": false,
+        "deleted": false
+      },
+      {
+        "path": "src/orders/api.ts",
+        "adds": 3,
+        "dels": 1,
+        "hunks": 1,
+        "new": false,
+        "deleted": false
+      },
+      {
+        "path": "src/orders/cache.ts",
+        "adds": 1,
+        "dels": 0,
+        "hunks": 1,
+        "new": true,
+        "deleted": false
+      }
+    ]
+  },
+  "report": {
+    "status": "COMPLETE",
+    "files": [
+      "src/orders/api.ts",
+      "src/orders/api.test.ts"
+    ],
+    "steps": [
+      "- `src/orders/api.ts`",
+      "- `src/orders/api.test.ts`"
+    ]
+  },
+  "summary": {
+    "errors": 1,
+    "warnings": 1,
+    "status": "fail",
+    "certifiable": true
+  },
+  "findings": [
+    {
+      "rule": "PC003",
+      "title": "file outside the plan's in-scope list",
+      "severity": "error",
+      "message": "diff modifies `src/orders/cache.ts` which the plan does not permit (not covered by any in-scope entry); this survives commit and is invisible to a bare `git diff --stat`",
+      "witness": {
+        "kind": "diff-hunk",
+        "text": "src/orders/cache.ts :: @@ -0,0 +1 @@",
+        "why": "one hunk already proves `src/orders/cache.ts` is in the diff; the other 0 hunk(s) are not needed",
+        "minimized_from": 1
+      }
+    },
+    {
+      "rule": "PC007",
+      "title": "diff contains a file the executor report does not mention",
+      "severity": "warning",
+      "message": "diff changes `src/orders/cache.ts` but the executor report does not list it",
+      "witness": {
+        "kind": "diff-file",
+        "text": "diff --git a/src/orders/cache.ts",
+        "why": "undocumented change; reviewer must read it explicitly"
+      }
+    }
+  ]
+}

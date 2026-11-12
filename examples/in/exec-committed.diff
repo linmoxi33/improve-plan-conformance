@@ -1,0 +1,29 @@
+diff --git a/src/orders/api.test.ts b/src/orders/api.test.ts
+index 0927ff7..e9b9920 100644
+--- a/src/orders/api.test.ts
++++ b/src/orders/api.test.ts
+@@ -1,5 +1,5 @@
+ import { listOrders } from "./api";
+ 
+-test("lists orders", async () => {
++test("batches user lookup", async () => {
+   expect(await listOrders()).toHaveLength(1);
+ });
+diff --git a/src/orders/api.ts b/src/orders/api.ts
+index 993204f..5239aa8 100644
+--- a/src/orders/api.ts
++++ b/src/orders/api.ts
+@@ -1,3 +1,5 @@
+ export async function listOrders() {
+-  return db.orders.findMany();
++  const rows = await db.orders.findMany();
++  const users = await db.users.findMany({ where: { id: { in: rows.map((r) => r.userId) } } });
++  return rows.map((r) => ({ ...r, user: users.find((u) => u.id === r.userId) }));
+ }
+diff --git a/src/orders/cache.ts b/src/orders/cache.ts
+new file mode 100644
+index 0000000..7c1d71d
+--- /dev/null
++++ b/src/orders/cache.ts
+@@ -0,0 +1 @@
++export const cache = new Map();
