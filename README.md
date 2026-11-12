@@ -49,7 +49,7 @@ $ git diff 416e5df...HEAD --stat   # what this tool consumes
 Zero dependencies, Python 3.9+.
 
 ```bash
-git clone <this repo> && cd improve-plan-conformance
+git clone https://github.com/linmoxi33/improve-plan-conformance && cd improve-plan-conformance
 python3 -m unittest discover -s tests        # 20 tests
 ```
 
